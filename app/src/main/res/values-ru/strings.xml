@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Биофидбек</string>
+    <string name="heart_rate">Пульс</string>
+    <string name="stress">Стресс</string>
+    <string name="select_parameter_to_lower">Выберите параметр для понижения</string>
+    <string name="welcome">Добро пожаловать!</string>
+</resources>
