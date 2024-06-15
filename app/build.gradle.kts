@@ -54,6 +54,10 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.lottie.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
