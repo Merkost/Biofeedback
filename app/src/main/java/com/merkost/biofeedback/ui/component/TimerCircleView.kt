@@ -3,11 +3,7 @@ package com.merkost.biofeedback.ui.component
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,18 +19,18 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.merkost.biofeedback.ui.theme.PurpleGrey80
+import com.merkost.biofeedback.ui.theme.Blue40
 
 @Composable
 fun TimerCircleView(
+    modifier: Modifier = Modifier,
     totalTime: Int,
+    borderColor: Color = Blue40,
     onTimerFinish: () -> Unit
 ) {
     var timeLeft by remember { mutableIntStateOf(totalTime) }
 
     val isDark = isSystemInDarkTheme()
-    // Timer logic
     LaunchedEffect(key1 = timeLeft) {
         if (timeLeft > 0) {
             kotlinx.coroutines.delay(1000L)
@@ -44,17 +40,14 @@ fun TimerCircleView(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .size(200.dp)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val sweepAngle by animateFloatAsState(360 * (timeLeft / totalTime.toFloat()))
 
-        Box(contentAlignment = Alignment.Center) {
-            Canvas(modifier = Modifier.size(200.dp)) {
+    val sweepAngle by animateFloatAsState(360 * (timeLeft / totalTime.toFloat()))
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Canvas(modifier = Modifier.matchParentSize()) {
 
 //                drawArc(
 //                    color = if (isDark) Color.Gray else Color.LightGray,
@@ -63,21 +56,20 @@ fun TimerCircleView(
 //                    useCenter = false,
 //                    style = Stroke(16.dp.toPx(), cap = StrokeCap.Round)
 //                )
-                drawArc(
-                    color = if (isDark) Color.Gray else Color.White,
-                    startAngle = 270f,
-                    sweepAngle = sweepAngle,
-                    useCenter = false,
-                    style = Stroke(16.dp.toPx(), cap = StrokeCap.Round)
-                )
-
-            }
-            Text(
-                text = "$timeLeft",
-                fontSize = 34.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.onSurface
+            drawArc(
+                color = borderColor,
+                startAngle = 270f,
+                sweepAngle = sweepAngle,
+                useCenter = false,
+                style = Stroke(10.dp.toPx(), cap = StrokeCap.Round)
             )
+
         }
+        Text(
+            text = "$timeLeft",
+            fontWeight = FontWeight.ExtraBold,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+
     }
 }

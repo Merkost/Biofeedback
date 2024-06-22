@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.merkost.biofeedback.ui.BaselineScreen
+import com.merkost.biofeedback.ui.VisualizationScreen
 import com.merkost.biofeedback.ui.Screen
 import com.merkost.biofeedback.ui.WelcomeScreen
 import com.merkost.biofeedback.ui.theme.BiofeedbackTheme
@@ -37,9 +38,17 @@ fun Navigation(navController: NavHostController) {
         }
 
         composable(Screen.BaselineMeasurement.route) {
-            BaselineScreen(onSkip = {}) {
-                navController.navigate(Screen.Welcome.route)
-            }
+            BaselineScreen(
+                onComplete = {
+                    navController.navigate(Screen.Visualization.route) {
+                        popUpTo(Screen.Welcome.route)
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Visualization.route) {
+            VisualizationScreen()
         }
     }
 }

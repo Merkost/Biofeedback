@@ -2,7 +2,9 @@
     <string name="app_name">Biofeedback</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="stress">Stress</string>
-    <string name="select_parameter_to_lower">Select the parameter to lower</string>
-    <string name="welcome">Welcome to Biofeedback App</string>
+    <string name="select_parameter_to_lower">Select a parameter</string>
+    <string name="welcome">Welcome to Biofeedback</string>
     <string name="start">Start</string>
+    <string name="baseline_description">Sit still and relax for one minute to measure your baseline.</string>
+    <string name="data_statistic">Data statistic</string>
 </resources>

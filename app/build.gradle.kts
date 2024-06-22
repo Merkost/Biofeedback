@@ -58,6 +58,9 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
+    implementation("com.patrykandpatrick.vico:compose:2.0.0-alpha.21")
+    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.21")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

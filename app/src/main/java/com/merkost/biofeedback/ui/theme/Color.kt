@@ -2,6 +2,8 @@ package com.merkost.biofeedback.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+val Blue40 = Color(0xff85a0fa)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
