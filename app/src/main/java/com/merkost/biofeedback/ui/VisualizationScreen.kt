@@ -2,18 +2,18 @@ package com.merkost.biofeedback.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +40,9 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
     val heartRates by viewModel.heartRates.collectAsState()
     val gsrRate by viewModel.gsrData.collectAsState()
     val gsrRates by viewModel.gsrRates.collectAsState()
+    val gobeVersion by viewModel.gobeVersion.collectAsState()
+    val shortSummaryInfo by viewModel.shortSummaryInfo.collectAsState()
+    val isConnected by viewModel.healbeConnected.collectAsState()
 
     val minHeartRate = 60
     val maxHeartRate = 100
@@ -49,10 +52,10 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
     }
 
     val balloonPosition by animateFloatAsState(
-        animationSpec = tween(5000),
-        targetValue = ((heartRate - minHeartRate).toFloat() / (maxHeartRate - minHeartRate).toFloat()).coerceIn(
-            0f,
-            1f
+        animationSpec = tween(5500),
+        targetValue = ((maxHeartRate - heartRate).toFloat() / (maxHeartRate - minHeartRate).toFloat()).coerceIn(
+            -0.5f,
+            1.0f
         )
     )
 
@@ -69,6 +72,9 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
             },
             content = {
                 RawDataVisualizationScreen(
+                    isConnected = isConnected,
+                    gobeVersion = gobeVersion,
+                    summaryInfo = shortSummaryInfo,
                     currentHeartRate = heartRate,
                     currentGsrActivity = gsrRate,
                     heartRates = heartRates,
@@ -90,7 +96,11 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
             LottieAnimation(
                 composition = skyComposition,
                 progress = { skyProgress },
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        showRaw = true
+                    },
                 contentScale = ContentScale.Crop
             )
 
@@ -100,22 +110,28 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
                 composition = composition,
                 iterations = LottieConstants.IterateForever
             )
-            LottieAnimation(
-                composition = composition,
-                progress = { progress }, // Pass the progress to the LottieAnimation
-                modifier = Modifier
-                    .size(500.dp)
-                    .offset(y = -offsetY)
-            )
 
-            Button(
-                onClick = { showRaw = true },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(16.dp)
-            ) {
-                Text(text = "Raw Data")
+            if (heartRates.isNotEmpty()) {
+
+                LottieAnimation(
+                    composition = composition,
+                    progress = { progress }, // Pass the progress to the LottieAnimation
+                    modifier = Modifier
+                        .size(500.dp)
+                        .offset(y = -offsetY)
+                )
+
             }
+
+
+//            Button(
+//                onClick = { showRaw = true },
+//                modifier = Modifier
+//                    .align(Alignment.BottomCenter)
+//                    .padding(16.dp)
+//            ) {
+//                Text(text = "Raw Data")
+//            }
         }
     }
 }

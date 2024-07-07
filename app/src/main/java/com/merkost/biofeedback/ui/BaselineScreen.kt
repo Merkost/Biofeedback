@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -60,7 +60,8 @@ fun BaselineScreen(onComplete: () -> Unit) {
                     .padding(16.dp)
                     .size(58.dp)
                     .align(Alignment.TopEnd),
-                totalTime = 60, onTimerFinish = onComplete)
+                totalTime = 60, onTimerFinish = onComplete
+            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -75,11 +76,14 @@ fun BaselineScreen(onComplete: () -> Unit) {
                     modifier = Modifier
                         .size(300.dp)
                 )
-                Text(
-                    text = stringResource(R.string.baseline_description),
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.SemiBold),
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
+                ElevatedCard {
+                    Text(
+                        text = stringResource(R.string.baseline_description),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .padding(16.dp)
+                    )
+                }
 
             }
             Row(
@@ -92,10 +96,12 @@ fun BaselineScreen(onComplete: () -> Unit) {
             ) {
                 TextButton(
                     onClick = onComplete,
-                    modifier = Modifier.padding(horizontal = 16.dp).weight(1f)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .weight(1f)
                 ) {
                     Text(
-                        text = "Skip",
+                        text = stringResource(R.string.skip),
                         fontSize = 12.sp,
                     )
                 }

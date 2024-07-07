@@ -75,24 +75,3 @@ fun RawDataVisualizationScreen(
         }
     }
 }
-
-@Composable
-fun AnimatedHeartIcon(modifier: Modifier, heartRate: Int) {
-    val infiniteTransition = rememberInfiniteTransition()
-    val scale by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.3f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2500),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-
-    Image(
-        imageVector = Icons.Default.Favorite,
-        contentDescription = "Heart Icon",
-        modifier = modifier
-            .scale(scale),
-        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.Red)
-    )
-}

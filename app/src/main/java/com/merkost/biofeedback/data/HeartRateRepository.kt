@@ -16,7 +16,7 @@ class HeartRateRepository {
     val gsrFlow: Flow<Int> = flow {
         while (true) {
             emit((500..2000).random())
-            delay(0.1.minutes)
+            delay(1.minutes)
         }
     }
 }

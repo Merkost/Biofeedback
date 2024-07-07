@@ -7,4 +7,6 @@
     <string name="start">Start</string>
     <string name="baseline_description">Sit still and relax for one minute to measure your baseline.</string>
     <string name="data_statistic">Data statistic</string>
+    <string name="skip">Skip</string>
+    <string name="current_heart_rate">Current Heart Rate: %s</string>
 </resources>

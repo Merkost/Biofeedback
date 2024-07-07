@@ -1,6 +1,7 @@
 package com.merkost.biofeedback.ui
 
-import android.content.Intent
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,9 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,27 +30,57 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.healbe.healbesdk.business_api.HealbeSdk
 import com.merkost.biofeedback.R
+import com.merkost.biofeedback.ui.component.DoubleBackPressHandler
+import com.merkost.biofeedback.viewmodel.VisualizationViewModel
+import org.koin.androidx.compose.koinViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(
     navigateToOptions: () -> Unit,
+    toHealbeLogin: () -> Unit,
 ) {
+    val viewModel: VisualizationViewModel = koinViewModel()
+    val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsState()
     var selectedOption: BiofeedbackOption? by remember {
         mutableStateOf(null)
+    }
+
+    DoubleBackPressHandler()
+
+    LaunchedEffect(uiState) {
+        uiState?.let {
+            context.showToast(it)
+        }
+    }
+
+    val isSdkInitialized by viewModel.isSdkInitialized.collectAsState()
+    val isHealbeConnected by viewModel.healbeConnected.collectAsState()
+
+    LaunchedEffect(Unit) {
+        if (isHealbeConnected) viewModel.observeData()
+        else viewModel.connectToGobe()
     }
 
     Scaffold(
         topBar = {
             TopAppBar(title = {}, actions = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.LinkOff, "")
+                IconButton(onClick = { if (isSdkInitialized.not()) toHealbeLogin() }) {
+                    Icon(
+                        if (isHealbeConnected) Icons.Default.Link
+                        else Icons.Default.LinkOff,
+                        ""
+                    )
                 }
             })
         }
@@ -86,4 +118,8 @@ fun WelcomeScreen(
             }
         }
     }
+}
+
+fun Context.showToast(string: String) {
+    Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
 }

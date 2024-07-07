@@ -6,6 +6,9 @@
     <string name="select_parameter_to_lower">Выберите параметр для понижения</string>
     <string name="welcome">Добро пожаловать!</string>
     <string name="start">Начать</string>
-    <string name="baseline_description">Для начала эксперимента расслабьтесь и сидите спокойно в течение одной минуты, чтобы измерить ваши начальные показатели.</string>
+    <string name="baseline_description">Расслабьтесь и сидите спокойно в течение одной минуты, чтобы измерить ваши начальные показатели.</string>
     <string name="data_statistic">Статистика данных</string>
+    <string name="skip">Пропустить</string>
+    <string name="current_heart_rate">Текущий пульс: %s</string>
+
 </resources>

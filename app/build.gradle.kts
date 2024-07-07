@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -12,7 +13,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -49,7 +50,14 @@ android {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+}
+
 dependencies {
+    implementation(project(":healbe"))
 
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
@@ -61,7 +69,6 @@ dependencies {
     implementation("com.patrykandpatrick.vico:compose:2.0.0-alpha.21")
     implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.21")
 
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -71,6 +78,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +86,18 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Logging
+    api("com.jakewharton.timber:timber:5.0.1")
+
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.5.2")
+
+
+    // HEALBE SDK
+    api("com.healbe:healbesdk:1.5.0")
+
+    // rxJava
+    api("io.reactivex.rxjava2:rxjava:2.2.21")
+    api("io.reactivex.rxjava2:rxandroid:2.1.1")
 }
