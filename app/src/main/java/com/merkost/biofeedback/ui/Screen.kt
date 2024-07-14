@@ -5,4 +5,5 @@ sealed class Screen(val route: String) {
     data object BaselineMeasurement : Screen("baseline_measurement")
     data object Visualization : Screen("visualization")
     data object HealbeLogin: Screen("healbe_login")
+    data object ConnectionSettings: Screen("connection_settings")
 }

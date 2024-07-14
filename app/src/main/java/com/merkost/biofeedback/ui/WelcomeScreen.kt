@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,7 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.healbe.healbesdk.business_api.HealbeSdk
+import com.healbe.healbesdk.device_api.ClientState
 import com.merkost.biofeedback.R
 import com.merkost.biofeedback.ui.component.DoubleBackPressHandler
 import com.merkost.biofeedback.viewmodel.VisualizationViewModel
@@ -47,7 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun WelcomeScreen(
     navigateToOptions: () -> Unit,
-    toHealbeLogin: () -> Unit,
+    navigateToConnectionSetting: () -> Unit,
 ) {
     val viewModel: VisualizationViewModel = koinViewModel()
     val context = LocalContext.current
@@ -59,28 +58,24 @@ fun WelcomeScreen(
     DoubleBackPressHandler()
 
     LaunchedEffect(uiState) {
-        uiState?.let {
-            context.showToast(it)
-        }
+        uiState?.let { context.showToast(it) }
     }
 
-    val isSdkInitialized by viewModel.isSdkInitialized.collectAsState()
-    val isHealbeConnected by viewModel.healbeConnected.collectAsState()
+    val healBeConnectionState by viewModel.healbeConnection.collectAsState()
+
+    val isHealBeConnected by remember(healBeConnectionState) {
+        mutableStateOf(healBeConnectionState == ClientState.CONNECTED)
+    }
 
     LaunchedEffect(Unit) {
-        if (isHealbeConnected) viewModel.observeData()
-        else viewModel.connectToGobe()
+        if (isHealBeConnected) viewModel.observeData()
     }
 
     Scaffold(
         topBar = {
             TopAppBar(title = {}, actions = {
-                IconButton(onClick = { if (isSdkInitialized.not()) toHealbeLogin() }) {
-                    Icon(
-                        if (isHealbeConnected) Icons.Default.Link
-                        else Icons.Default.LinkOff,
-                        ""
-                    )
+                IconButton(onClick = { navigateToConnectionSetting() }) {
+                    Icon(Icons.Default.Link, "")
                 }
             })
         }

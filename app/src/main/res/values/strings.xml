@@ -9,4 +9,5 @@
     <string name="data_statistic">Data statistic</string>
     <string name="skip">Skip</string>
     <string name="current_heart_rate">Current Heart Rate: %s</string>
+    <string name="connection_settings">Connection Settings</string>
 </resources>

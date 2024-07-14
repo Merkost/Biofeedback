@@ -10,5 +10,6 @@
     <string name="data_statistic">Статистика данных</string>
     <string name="skip">Пропустить</string>
     <string name="current_heart_rate">Текущий пульс: %s</string>
+    <string name="connection_settings">Настройки подключения</string>
 
 </resources>

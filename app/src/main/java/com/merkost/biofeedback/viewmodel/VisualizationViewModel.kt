@@ -6,6 +6,7 @@ import com.healbe.complex_example.dashboard.ShortSummaryInfo
 import com.healbe.healbesdk.business_api.HealbeSdk
 import com.healbe.healbesdk.business_api.healthdata.rxjava2.neuro
 import com.healbe.healbesdk.device_api.ClientState
+import com.merkost.biofeedback.data.HealBeRepository
 import com.merkost.biofeedback.data.HeartRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,16 +22,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.rx2.asFlow
-import kotlinx.coroutines.rx2.await
 import timber.log.Timber
 
-class VisualizationViewModel(val repository: HeartRateRepository) : ViewModel() {
+class VisualizationViewModel(
+    private val healbeRepository: HealBeRepository,
+    private val repository: HeartRateRepository
+) : ViewModel() {
 
     val isDebug = false
     val uiState: MutableStateFlow<String?> = MutableStateFlow(null)
 
-    val healbeConnected = MutableStateFlow(false)
-    val isSdkInitialized = MutableStateFlow(false)
+    val healbeConnection = healbeRepository.healBeConnectionState
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClientState.DISCONNECTED)
+
+    val healbeConnected = healbeRepository.isHealBeConnected
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     val gobeVersion = MutableStateFlow("")
     val shortSummaryInfo = MutableStateFlow<ShortSummaryInfo?>(null)
 
@@ -50,21 +57,6 @@ class VisualizationViewModel(val repository: HeartRateRepository) : ViewModel() 
 
     init {
         Timber.tag("VisualizationViewModel").d("init")
-    }
-
-    fun connectToGobe() {
-        viewModelScope.launch {
-            try {
-                if (isDebug) return@launch collectRates()
-                if (isSdkInitialized.value.not()) initSdk()
-                HealbeSdk.get().GOBE.connect().doOnComplete {
-                    healbeConnected.update { true }
-                }.await()
-            } catch (t: Throwable) {
-                uiState.update { t.message }
-                Timber.e(t)
-            }
-        }
     }
 
     private fun collectRates() {
@@ -90,19 +82,6 @@ class VisualizationViewModel(val repository: HeartRateRepository) : ViewModel() 
                     _gsrRates.update { currentGsrRates }
                 }
             }
-        }
-    }
-
-    fun initSdk() {
-        try {
-            if (isSdkInitialized.value) return
-            HealbeSdk.get()
-            isSdkInitialized.update { true }
-            if (HealbeSdk.get().GOBE.isConnectionStarted.not()) {
-                connectToGobe()
-            }
-        } catch (e: IllegalStateException) {
-            isSdkInitialized.update { false }
         }
     }
 
