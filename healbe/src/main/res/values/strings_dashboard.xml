@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard">Dashboard</string>
+    <string name="connect">Connect</string>
+
+    <string name="disconnect">Disconnect</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="find_another_gobe">Find another GoBe</string>
+    <string name="synchronization_p" formatted="false">Synchronization (%d%%)…</string>
+    <string name="charging">Charging</string>
+    <string name="percents">%d%%</string>
+
+    <string name="enable_bluetooth">Enable Bluetooth to connect your HEALBE GoBe</string>
+    <string name="bluetooth_error">Internal device Bluetooth LE error</string>
+    <string name="gobe_connection_error_short">Can\'t find your GoBe</string>
+    <string name="no_contact">No contact or poor contact with skin</string>
+
+    <string name="energy_header">Energy balance</string>
+    <string name="hydration_header_cur">Hydration level</string>
+    <string name="hydration_header">Hydration</string>
+    <string name="pulse_header">Pulse</string>
+    <string name="pulse_header_cur">Current pulse</string>
+    <string name="sleep_header">Sleep</string>
+    <string name="neuro_header">Neuroactivity</string>
+    <string name="stress_header">Stress</string>
+    <string name="stress_header_cur">Stress level</string>
+    <string name="may_take_up_to_hour">may take up to an hour</string>
+    <string name="sleep_quality">Sleep quality: %d%%</string>
+
+    <plurals name="plurals_steps">
+        <item quantity="zero">steps</item>
+        <item quantity="one">step</item>
+        <item quantity="other">steps</item>
+    </plurals>
+
+    <string name="active">active</string>
+    <string name="time_period_hours">h</string>
+    <string name="time_period_mins">min</string>
+    <string name="time_period_long" formatted="false">%d %s %d %s</string>
+    <string name="time_period_short" formatted="false">%d %s</string>
+    <string name="na">n/a</string>
+    <string name="kcal">kcal</string>
+    <string name="bpm">bpm</string>
+
+    <string name="level_no_stress">No stress</string>
+    <string name="level_light">Light</string>
+    <string name="level_moderate">Moderate</string>
+    <string name="level_high">High</string>
+    <string name="level_very_high">Very high</string>
+
+    <string name="neuro_calm">Calmness</string>
+    <string name="neuro_effic">Efficacy</string>
+    <string name="neuro_tension">Tension</string>
+    <string name="neuro_overload">Overload</string>
+    <string name="neuro_trend_down">level goes down</string>
+    <string name="neuro_trend_up">level goes up</string>
+
+    <string name="calculating">Calculating</string>
+    <string name="low">Low</string>
+    <string name="normal">Normal</string>
+
+    <string name="no_data">No Data</string>
+
+    <string name="awake">Awake</string>
+    <string name="asleep">Asleep</string>
+</resources>

@@ -2,10 +2,13 @@ package com.merkost.biofeedback.data
 
 import android.content.Context
 import com.healbe.healbesdk.business_api.HealbeSdk
+import com.healbe.healbesdk.business_api.healthdata.flow.neuro
 import com.healbe.healbesdk.device_api.ClientState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -18,10 +21,9 @@ class HealBeRepository(
     val context: Context,
     healbeExceptionHandler: HealbeExceptionHandler
 ) {
-
     val exFlow = healbeExceptionHandler.exceptionsFlow
 
-    private lateinit var sdk: HealbeSdk
+    internal lateinit var sdk: HealbeSdk
 
     private val _isSdkInitialized = MutableStateFlow(::sdk.isInitialized)
     val isSdkInitialized = _isSdkInitialized.asStateFlow()
@@ -32,8 +34,7 @@ class HealBeRepository(
         else flowOf(ClientState.DISCONNECTED)
     }
 
-    val isHealBeConnected = healBeConnectionState.map { it == ClientState.CONNECTED }
-
+    val isHealBeReady = healBeConnectionState.map { it == ClientState.READY }
 
     suspend fun initSdk() {
         try {
@@ -48,7 +49,9 @@ class HealBeRepository(
 
     suspend fun connectToGoBe() {
         try {
+            sdk.USER.prepareSession().await()
             sdk.GOBE.connect().await()
+
         } catch (t: Throwable) {
             exFlow.tryEmit(AppException(t, "Error connecting to GoBe"))
             Timber.e(t)

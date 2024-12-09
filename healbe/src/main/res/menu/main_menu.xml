@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        app:showAsAction="collapseActionView"
+        android:title="@string/logout" />
+
+    <item
+        android:id="@+id/connect"
+        android:orderInCategory="200"
+        app:showAsAction="collapseActionView"
+        android:title="@string/connect" />
+
+    <item android:visible="false"
+        android:id="@+id/find"
+        android:orderInCategory="200"
+        app:showAsAction="collapseActionView"
+        android:title="@string/find_another_gobe" />
+
+</menu>

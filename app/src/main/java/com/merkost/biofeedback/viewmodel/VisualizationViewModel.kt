@@ -2,12 +2,11 @@ package com.merkost.biofeedback.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.healbe.complex_example.dashboard.ShortSummaryInfo
-import com.healbe.healbesdk.business_api.HealbeSdk
-import com.healbe.healbesdk.business_api.healthdata.rxjava2.neuro
+import com.healbe.healbesdk.business_api.healthdata.flow.neuro
 import com.healbe.healbesdk.device_api.ClientState
 import com.merkost.biofeedback.data.HealBeRepository
 import com.merkost.biofeedback.data.HeartRateRepository
+import com.merkost.biofeedback.data.ShortSummaryInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,7 +34,7 @@ class VisualizationViewModel(
     val healbeConnection = healbeRepository.healBeConnectionState
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClientState.DISCONNECTED)
 
-    val healbeConnected = healbeRepository.isHealBeConnected
+    val healbeConnected = healbeRepository.isHealBeReady
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     val gobeVersion = MutableStateFlow("")
@@ -55,11 +54,7 @@ class VisualizationViewModel(
         it.lastOrNull() ?: 0
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
-    init {
-        Timber.tag("VisualizationViewModel").d("init")
-    }
-
-    private fun collectRates() {
+    private fun collectDebugRates() {
         viewModelScope.launch {
             launch {
                 repository.heartRateFlow.collect { newRate ->
@@ -88,50 +83,52 @@ class VisualizationViewModel(
     fun observeData() {
         viewModelScope.launch {
             launch {
-                HealbeSdk.get().HEALTH_DATA.observeHeartRate()
-                    .asFlow().collectLatest {
-                        val currentRates = _heartRates.value.toMutableList()
-                        if (currentRates.size >= 20) {
-                            currentRates.removeAt(0)
-                        }
-                        currentRates.add(it.heartRate)
-                        _heartRates.update { currentRates }
+                healbeRepository.sdk.HEALTH_DATA.observeHeartRate().asFlow().collectLatest {
+                    Timber.tag("HeartRate").d("HEALTH_DATA Heart: ${it}")
+
+                    val currentRates = _heartRates.value.toMutableList()
+                    if (currentRates.size >= 20) {
+                        currentRates.removeAt(0)
                     }
+                    currentRates.add(it.heartRate)
+                    _heartRates.update { currentRates }
+                }
             }
 
             launch {
-                HealbeSdk.get().HEALTH_DATA.neuro.observeLastNeuroData()
-                    .asFlow().collectLatest {
-                        val currentGsrRates = _gsrRates.value.toMutableList()
-                        if (currentGsrRates.size >= 20) {
-                            currentGsrRates.removeAt(0)
-                        }
-                        currentGsrRates.add(it.gsrActivity)
-                        _gsrRates.update { currentGsrRates }
+                healbeRepository.sdk.HEALTH_DATA.neuro.observeLastNeuroData().collectLatest {
+                    Timber.tag("HeartRate").d("HEALTH_DATA neuro: ${it}")
+
+                    val currentGsrRates = _gsrRates.value.toMutableList()
+                    if (currentGsrRates.size >= 20) {
+                        currentGsrRates.removeAt(0)
                     }
+                    currentGsrRates.add(it.gsrActivity)
+                    _gsrRates.update { currentGsrRates }
+                }
             }
 
             combine(
-                HealbeSdk.get().GOBE.observeConnectionState()
+                healbeRepository.sdk.GOBE.observeConnectionState()
                     .map { it == ClientState.READY }
                     .distinctUntilChanged()
                     .asFlow(),
-                HealbeSdk.get().TASKS.observeSensorState()
+                healbeRepository.sdk.TASKS.observeSensorState()
                     .map { it.isOnHand }
                     .distinctUntilChanged()
                     .asFlow(),
-                HealbeSdk.get().HEALTH_DATA.observeHeartRate()
-                    .asFlow(),
-                HealbeSdk.get().HEALTH_DATA.neuro.observeLastNeuroData()
-                    .toObservable()
-                    .asFlow(),
-                HealbeSdk.get().GOBE.observe()
+                healbeRepository.sdk.HEALTH_DATA.observeHeartRate().asFlow(),
+                healbeRepository.sdk.HEALTH_DATA.neuro.observeLastNeuroData(),
+                healbeRepository.sdk.GOBE.observe()
                     .map { device -> device.version }
                     .distinctUntilChanged()
                     .onBackpressureLatest()
                     .toObservable()
                     .asFlow()
             ) { isConnected, onHand, heartRate, neuroData, goBeVersion ->
+                Timber.tag("ALL")
+                    .d("isConnected: $isConnected, onHand: $onHand, heartRate: $heartRate, neuroData: $neuroData, goBeVersion: $goBeVersion")
+
                 Pair(
                     ShortSummaryInfo(
                         isConnected, onHand,
@@ -139,18 +136,15 @@ class VisualizationViewModel(
                     ),
                     goBeVersion
                 )
-            }
-                .distinctUntilChanged()
+            }.distinctUntilChanged()
                 .flowOn(Dispatchers.Default)
                 .collect { (todaySummaryInfo, goBeVersion) ->
+                    Timber.tag("ALL")
+                        .d("todaySummaryInfo: $todaySummaryInfo, goBeVersion: $goBeVersion")
                     shortSummaryInfo.update { todaySummaryInfo }
                     gobeVersion.update { goBeVersion.name }
                 }
         }
-    }
-
-    fun getGobeData() {
-        TODO("Not yet implemented")
     }
 
 }

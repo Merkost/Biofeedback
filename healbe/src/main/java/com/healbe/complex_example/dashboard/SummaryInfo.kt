@@ -16,12 +16,3 @@ data class SummaryInfo(
     val stressState: StressState,
     val stressLevel: Float
 )
-
-data class ShortSummaryInfo(
-    val isConnected: Boolean,
-    val isOnHand: Boolean,
-    val heartRate: CurrentHeartRate,
-    val neuroData: NeuroData,
-) {
-    fun SummaryInfo.isActive() = this@ShortSummaryInfo.isConnected && this.isOnHand
-}

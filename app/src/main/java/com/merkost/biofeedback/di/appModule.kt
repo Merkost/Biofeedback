@@ -5,6 +5,7 @@ import com.merkost.biofeedback.data.HealbeExceptionHandler
 import com.merkost.biofeedback.data.HeartRateRepository
 import com.merkost.biofeedback.viewmodel.VisualizationViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
@@ -13,5 +14,5 @@ val appModule = module {
     single { HealBeRepository(androidApplication(), get()) }
     single { HeartRateRepository() }
 
-    single { VisualizationViewModel(get(), get()) }
+    viewModel { VisualizationViewModel(get(), get()) }
 }

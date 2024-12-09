@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DashboardView">
+        <attr name="icon" format="reference" />
+        <attr name="round_color" format="color" />
+        <attr name="title_string" format="string|reference" />
+        <attr name="text_string" format="string|reference" />
+        <attr name="value_string" format="string|reference" />
+        <attr name="progress_visible" format="boolean" />
+        <attr name="text_visible" format="boolean" />
+        <attr name="value_visible" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="warn_blu_permission">We can\'t continue without Nearby Devices permission.</string>
+    <string name="warn_blu">We can\'t continue without Bluetooth.</string>
+    <string name="ok">OK</string>
+    <string name="logout">Logout</string>
+</resources>

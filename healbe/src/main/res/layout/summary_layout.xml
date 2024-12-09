@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/energy_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_balance_dash"
+        app:round_color="@color/secondary_purple"
+        app:title_string="@string/energy_header"
+        app:value_visible="false"
+        app:text_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/heart_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_color="@color/main_heart_red"
+        app:icon="@drawable/ic_heart_rate_dash"
+        app:title_string="@string/pulse_header"
+        app:text_visible="false"
+        app:value_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/water_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_color="@color/main_water_blue"
+        app:icon="@drawable/ic_water_dash"
+        app:title_string="@string/hydration_header"
+        app:value_visible="false"
+        app:text_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/neuro_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_color="@color/neuro_orange"
+        app:icon="@drawable/ic_neuro"
+        app:title_string="@string/neuro_header"
+        app:value_visible="false"
+        app:text_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/stress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_color="@color/secondary_stress_orange"
+        app:icon="@drawable/ic_stress_dash"
+        app:title_string="@string/stress_header"
+        app:value_visible="false"
+        app:text_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.healbe.complex_example.dashboard.DashboardView
+        android:id="@+id/sleep_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_color="@color/main_sleep_blue"
+        app:icon="@drawable/ic_sleep_dash"
+        app:title_string="@string/sleep_header"
+        app:value_visible="false"
+        app:text_visible="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
+</LinearLayout>

@@ -35,7 +35,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
+fun VisualizationScreen(
+    viewModel: VisualizationViewModel = koinViewModel()
+) {
     val heartRate by viewModel.heartRateData.collectAsState()
     val heartRates by viewModel.heartRates.collectAsState()
     val gsrRate by viewModel.gsrData.collectAsState()
@@ -43,6 +45,12 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
     val gobeVersion by viewModel.gobeVersion.collectAsState()
     val shortSummaryInfo by viewModel.shortSummaryInfo.collectAsState()
     val isConnected by viewModel.healbeConnected.collectAsState()
+
+    LaunchedEffect(isConnected) {
+        if (isConnected) {
+            viewModel.observeData()
+        }
+    }
 
     val minHeartRate = 60
     val maxHeartRate = 100
@@ -52,10 +60,9 @@ fun VisualizationScreen(viewModel: VisualizationViewModel = koinViewModel()) {
     }
 
     val balloonPosition by animateFloatAsState(
-        animationSpec = tween(5500),
-        targetValue = ((maxHeartRate - heartRate).toFloat() / (maxHeartRate - minHeartRate).toFloat()).coerceIn(
-            -0.5f,
-            1.0f
+        animationSpec = tween(5500), // Adjust the animation speed here if needed
+        targetValue = (1.0f - ((heartRate - minHeartRate).toFloat() / (maxHeartRate - minHeartRate).toFloat())).coerceIn(
+            0.0f, 1.0f
         )
     )
 

@@ -18,8 +18,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url = uri("http://nexus.healbe.com:8888/repository/maven-public/")
-            isAllowInsecureProtocol = true
+            url = uri("https://nexus.healbe.com/repository/maven-public/")
         }
     }
 }

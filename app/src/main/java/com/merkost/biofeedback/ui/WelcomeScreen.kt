@@ -37,9 +37,12 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.healbe.healbesdk.device_api.ClientState
 import com.merkost.biofeedback.R
+import com.merkost.biofeedback.data.HealBeRepository
 import com.merkost.biofeedback.ui.component.DoubleBackPressHandler
 import com.merkost.biofeedback.viewmodel.VisualizationViewModel
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,28 +51,14 @@ fun WelcomeScreen(
     navigateToOptions: () -> Unit,
     navigateToConnectionSetting: () -> Unit,
 ) {
-    val viewModel: VisualizationViewModel = koinViewModel()
-    val context = LocalContext.current
-    val uiState by viewModel.uiState.collectAsState()
+    val healbeRepository = koinInject<HealBeRepository>()
     var selectedOption: BiofeedbackOption? by remember {
         mutableStateOf(null)
     }
 
     DoubleBackPressHandler()
 
-    LaunchedEffect(uiState) {
-        uiState?.let { context.showToast(it) }
-    }
-
-    val healBeConnectionState by viewModel.healbeConnection.collectAsState()
-
-    val isHealBeConnected by remember(healBeConnectionState) {
-        mutableStateOf(healBeConnectionState == ClientState.CONNECTED)
-    }
-
-    LaunchedEffect(Unit) {
-        if (isHealBeConnected) viewModel.observeData()
-    }
+    val isHealBeConnected by healbeRepository.isHealBeReady.collectAsState(false)
 
     Scaffold(
         topBar = {
@@ -104,7 +93,7 @@ fun WelcomeScreen(
             OptionsView(selectedOption, onOptionSelected = { selectedOption = it })
 
             Button(
-                enabled = selectedOption != null,
+                enabled = selectedOption != null && isHealBeConnected,
                 onClick = navigateToOptions, modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)

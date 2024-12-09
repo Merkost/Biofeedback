@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HEALBE SDK Complex Example</string>
+    <string name="sdk_example">HEALBE SDK Example %1s</string>
+</resources>

@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.healbe.complex_example.dashboard.ShortSummaryInfo
 import com.merkost.biofeedback.R
+import com.merkost.biofeedback.data.ShortSummaryInfo
 import com.merkost.biofeedback.ui.component.HeartRateGraph
 
 @Composable

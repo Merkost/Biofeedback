@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">Please sign in</string>
+    <string name="register">Please sign up</string>
+    <string name="sign_up">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="go_sign_up">or Sign up</string>
+    <string name="go_sign_in">or Sign in</string>
+    <string name="login_error">Enter valid email</string>
+    <string name="password_error">Password should be at least 4 characters</string>
+    <string name="auth_error">Unexpected authorization error, see log with search key \"%1s\"</string>
+    <string name="too_much">Too much wrong tries, wait about 5 minutes</string>
+    <string name="wrong_login">Wrong user email or password</string>
+
+    <string name="please_fill_your_profile">Please fill your User profile</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="sex">Sex</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="country">Country</string>
+    <string name="weight">Weight</string>
+    <string name="weight_short_kg">kg</string>
+    <string name="height">Height</string>
+    <string name="length_short_cm">cm</string>
+    <string name="continue_text">Continue</string>
+    <string name="sign_out">Sign out</string>
+    <string name="unknown_error">Something goes wrong</string>
+    <string name="name_error">The field must not be blank and may contain only letters, spaces, and symbols in brackets (\' ` -)</string>
+    <string name="field_is_empty">The field could not be empty</string>
+    <string name="weight_error">Currently, HEALBE GoBe can work only with a weight range between %d and %d kg</string>
+    <string name="height_error">Height must be between %d and %d cm</string>
+</resources>

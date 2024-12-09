@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="validation_red">#d50000</color>
+    <color name="light_black_38">#60000000</color>
+    <color name="main_white_30">#4cffffff</color>
+
+    <color name="secondary_purple">#521767</color>
+    <color name="main_water_blue">#00b9ee</color>
+    <color name="main_heart_red">#ed4b56</color>
+    <color name="neuro_orange">#FB772C</color>
+    <color name="secondary_stress_orange">#ec7300</color>
+    <color name="main_sleep_blue">#2b85e0</color>
+    <color name="light_black_54">#8a000000</color>
+</resources>

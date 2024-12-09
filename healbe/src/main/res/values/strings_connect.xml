@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connecting_to">Connecting to %1s…</string>
+    <string name="connecting">Connecting…</string>
+    <string name="waiting">Waiting for %1s…</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_pin">Please enter pin</string>
+    <string name="pin_helper">Enter 6-digits PIN code to access you GoBe</string>
+    <string name="pin_helper_setup">Enter 6-digits PIN code to protect you GoBe</string>
+    <string name="error_firmware">Firmware error</string>
+    <string name="sorry">Sorry!\n\nThis SDK example don\'t know how\nto update device firmware!\n\nIn future versions we show him how.</string>
+    <string name="try_another_wristband">try another wristband</string>
+    <string name="warn_loc_permission">HEALBE GoBe and HEALBE SDK Android example application doesn\'t track your location. Application needs this permission to find your smart band.</string>
+    <string name="searching_devices_nearby">Searching devices nearby</string>
+    <string name="searching_devices_not_found">Device not found!</string>
+    <string name="make_sure">Make sure that GoBe is near\nyour phone and turned on</string>
+    <string name="retry">retry</string>
+</resources>

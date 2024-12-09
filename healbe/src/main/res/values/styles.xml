@@ -1,0 +1,47 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/main_purple</item>
+        <item name="colorPrimaryDark">@color/main_purple</item>
+        <item name="colorAccent">@color/main_purple</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowBackground">@drawable/background_stripes</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="validation">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/validation_red</item>
+    </style>
+
+    <style name="MainButtonBackgroundless" parent="Widget.AppCompat.Button.Borderless.Colored" >
+        <item name="android:textColor">@color/main_purple</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextField" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="hintTextColor">@color/main_purple</item>
+        <item name="errorTextColor">@color/validation_red</item>
+        <item name="errorIconTint">@color/validation_red</item>
+        <item name="materialThemeOverlay">@style/TextFieldTheme</item>
+    </style>
+
+    <style name="TextFieldTheme" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="colorControlActivated">@color/main_purple</item>
+    </style>
+
+    <style name="ExposedMenu" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <item name="hintTextColor">@color/main_purple</item>
+        <item name="endIconTint">@color/main_purple</item>
+    </style>
+</resources>
